@@ -1,0 +1,61 @@
+package com.proyecto.inscripcionplatform.curso.mapper;
+
+import com.proyecto.inscripcionplatform.curso.dto.CursoRequest;
+import com.proyecto.inscripcionplatform.curso.dto.CursoResponse;
+import com.proyecto.inscripcionplatform.curso.dto.ProfesorResponse;
+import com.proyecto.inscripcionplatform.curso.model.CursoEntity;
+import com.proyecto.inscripcionplatform.usuario.model.UsuarioEntity;
+
+// Mapper para convertir entre CursoRequest y CursoEntity
+public class CursoMapper {
+    public static CursoEntity toEntity(CursoRequest request) {
+        if (request == null) return null;
+
+        return CursoEntity.builder()
+                .id(request.getId())
+                .nombre(request.getNombre())
+                .duracion(request.getDuracion())
+                .valor(request.getValor())
+                .profesor(
+                    UsuarioEntity.builder()
+                        .id(request.getProfesorId())
+                        .build()
+                )
+                .build();
+    }
+    // Método para actualizar una entidad existente con los datos de un request
+    public static void updateEntity(CursoRequest request, CursoEntity bd) {
+        if (request == null || bd == null) return;
+
+        bd.setNombre(request.getNombre());
+        bd.setDuracion(request.getDuracion());
+        bd.setValor(request.getValor());
+
+        if (request.getProfesorId() != null) {
+            bd.setProfesor(
+                UsuarioEntity.builder()
+                    .id(request.getProfesorId())
+                    .build()
+            );
+        }
+    }
+
+    // Método para convertir una entidad a un response, incluyendo el ID del profesor
+    public static CursoResponse toResponse(CursoEntity entity) {
+        if (entity == null) return null;
+        return CursoResponse.builder()
+                .id(entity.getId())
+                .nombre(entity.getNombre())
+                .duracion(entity.getDuracion())
+                .valor(entity.getValor())
+                .profesor(
+                    entity.getProfesor() != null
+                    ? ProfesorResponse.builder()
+                        .id(entity.getProfesor().getId())
+                        .nombre(entity.getProfesor().getNombre())
+                        .build()
+                    : null
+                )
+                .build();
+    }
+}
