@@ -6,8 +6,10 @@ import com.proyecto.inscripcionplatform.curso.dto.ProfesorResponse;
 import com.proyecto.inscripcionplatform.curso.model.CursoEntity;
 import com.proyecto.inscripcionplatform.usuario.model.UsuarioEntity;
 
-// Mapper para convertir entre CursoRequest y CursoEntity
+
 public class CursoMapper {
+
+    // Mapper para convertir un CursoRequest a CursoEntity, incluyendo la referencia al profesor por su ID
     public static CursoEntity toEntity(CursoRequest request) {
         if (request == null) return null;
 
