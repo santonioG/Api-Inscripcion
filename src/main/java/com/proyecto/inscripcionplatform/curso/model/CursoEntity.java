@@ -2,6 +2,7 @@ package com.proyecto.inscripcionplatform.curso.model;
 
 import com.proyecto.inscripcionplatform.usuario.model.UsuarioEntity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,7 +31,8 @@ public class CursoEntity {
     @ManyToOne
     @JoinColumn(name = "profesor_id")
     private UsuarioEntity profesor;
-    private double duracion;
+    @Column(name= "duracion")
+    private double duracionMinutos;
     private double valor;
 
 }

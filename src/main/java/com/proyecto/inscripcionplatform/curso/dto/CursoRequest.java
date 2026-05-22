@@ -15,8 +15,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class CursoRequest {
-
-    private Long id;
     
     @NotBlank(message = "El nombre del curso no puede estar vacío")
     @Size(min = 2, max = 100, message = "El nombre del curso debe tener entre 2 y 100 caracteres")
@@ -27,7 +25,7 @@ public class CursoRequest {
 
     @NotNull(message = "La duración del curso es obligatoria")
     @Positive(message = "La duración del curso debe ser un número positivo")
-    private double duracion;
+    private double duracionMinutos;
 
     @NotNull(message = "El valor del curso es obligatorio")
     @Positive(message = "El valor del curso debe ser un número positivo")

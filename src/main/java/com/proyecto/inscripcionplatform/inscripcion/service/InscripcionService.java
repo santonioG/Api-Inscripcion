@@ -56,4 +56,10 @@ public class InscripcionService {
         //retornar response
         return InscripcionMapper.toResponse(saved);
     }
+
+    //obtener todas las inscripciones
+    public List<InscripcionResponse> getAllInscripciones() {
+        List<InscripcionEntity> inscripciones = inscripcionRepo.findAll();
+        return inscripciones.stream().map(InscripcionMapper::toResponse).toList();
+    }
 }

@@ -15,9 +15,8 @@ public class CursoMapper {
         if (request == null) return null;
 
         return CursoEntity.builder()
-                .id(request.getId())
                 .nombre(request.getNombre())
-                .duracion(request.getDuracion())
+                .duracionMinutos(request.getDuracionMinutos())
                 .valor(request.getValor())
                 .profesor(
                     UsuarioEntity.builder()
@@ -31,7 +30,7 @@ public class CursoMapper {
         if (request == null || bd == null) return;
 
         bd.setNombre(request.getNombre());
-        bd.setDuracion(request.getDuracion());
+        bd.setDuracionMinutos(request.getDuracionMinutos());
         bd.setValor(request.getValor());
 
         if (request.getProfesorId() != null) {
@@ -49,7 +48,7 @@ public class CursoMapper {
         return CursoResponse.builder()
                 .id(entity.getId())
                 .nombre(entity.getNombre())
-                .duracion(entity.getDuracion())
+                .duracionMinutos(entity.getDuracionMinutos())
                 .valor(entity.getValor())
                 .profesor(
                     entity.getProfesor() != null

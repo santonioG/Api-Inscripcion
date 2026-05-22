@@ -10,14 +10,20 @@ import com.proyecto.inscripcionplatform.curso.mapper.CursoMapper;
 import com.proyecto.inscripcionplatform.curso.model.CursoEntity;
 import com.proyecto.inscripcionplatform.curso.repository.CursoRepository;
 import com.proyecto.inscripcionplatform.exception.NotFoundException;
+import com.proyecto.inscripcionplatform.usuario.model.UsuarioEntity;
+import com.proyecto.inscripcionplatform.usuario.repository.UsuarioRepository;
 
 @Service
 public class CursoService {
 
     private final CursoRepository repo;
-    public CursoService(CursoRepository CursoRepository) {
+    private final UsuarioRepository usuarioRepo;
+
+    public CursoService(CursoRepository CursoRepository, UsuarioRepository usuarioRepo) {
         this.repo = CursoRepository;
+        this.usuarioRepo = usuarioRepo;
     }
+
     //obtener todos los Cursos
     public List<CursoResponse> findAll() { 
         return repo.findAll().stream().map(CursoMapper::toResponse).toList();
@@ -25,6 +31,8 @@ public class CursoService {
     //crear un nuevo Curso
     public CursoResponse create(CursoRequest request) {
         CursoEntity entity = CursoMapper.toEntity(request);
+        UsuarioEntity profesor = usuarioRepo.findById(request.getProfesorId()).orElseThrow(() -> new NotFoundException("Profesor no encontrado con id: " + request.getProfesorId()));
+        entity.setProfesor(profesor);
         CursoEntity saved = repo.save(entity);
         return CursoMapper.toResponse(saved);
     }

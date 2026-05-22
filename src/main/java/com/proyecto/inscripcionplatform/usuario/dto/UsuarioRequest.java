@@ -15,8 +15,6 @@ import lombok.Setter;
 @Builder
 public class UsuarioRequest {
 
-    private Long id;
-
     @NotBlank(message = "El nombre del curso no puede estar vacío")
     @Size(min = 2, max = 100, message = "El nombre del curso debe tener entre 2 y 100 caracteres")
     private String nombre;

@@ -13,7 +13,6 @@ public class UsuarioMapper {
         if (request == null) return null;
 
         return UsuarioEntity.builder()
-                .id(request.getId())
                 .nombre(request.getNombre())
                 .email(request.getEmail())
                 .clave(request.getClave())
