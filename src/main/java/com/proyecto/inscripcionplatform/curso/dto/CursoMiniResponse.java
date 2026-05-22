@@ -5,14 +5,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter @Builder
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CursoResponse {
-
+@Builder
+public class CursoMiniResponse {
     private Long id;
     private String nombre;
-    private double duracion;
     private double valor;
-    private ProfesorResponse profesor;
-}   
+}

@@ -1,4 +1,4 @@
-package com.proyecto.inscripcionplatform.curso.dto;
+package com.proyecto.inscripcionplatform.usuario.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,11 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CursoResponse {
-
+public class UsuarioMiniResponse {
     private Long id;
     private String nombre;
-    private double duracion;
-    private double valor;
-    private ProfesorResponse profesor;
-}   
+}

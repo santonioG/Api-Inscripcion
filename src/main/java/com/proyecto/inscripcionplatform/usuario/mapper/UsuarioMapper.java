@@ -1,6 +1,7 @@
 package com.proyecto.inscripcionplatform.usuario.mapper;
 
 import com.proyecto.inscripcionplatform.inscripcion.model.Rol;
+import com.proyecto.inscripcionplatform.usuario.dto.UsuarioMiniResponse;
 import com.proyecto.inscripcionplatform.usuario.dto.UsuarioRequest;
 import com.proyecto.inscripcionplatform.usuario.dto.UsuarioResponse;
 import com.proyecto.inscripcionplatform.usuario.model.UsuarioEntity;
@@ -43,4 +44,14 @@ public class UsuarioMapper {
                 .rol(entity.getRol())
                 .build();
     }
+    
+    // Método para convertir una entidad a un mini response (solo id y nombre)
+    public static UsuarioMiniResponse toMiniResponse(UsuarioEntity usuario) {
+    if (usuario == null) return null;
+
+    return UsuarioMiniResponse.builder()
+            .id(usuario.getId())
+            .nombre(usuario.getNombre())
+            .build();
+}
 }

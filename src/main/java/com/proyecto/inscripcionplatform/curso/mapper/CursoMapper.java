@@ -1,5 +1,6 @@
 package com.proyecto.inscripcionplatform.curso.mapper;
 
+import com.proyecto.inscripcionplatform.curso.dto.CursoMiniResponse;
 import com.proyecto.inscripcionplatform.curso.dto.CursoRequest;
 import com.proyecto.inscripcionplatform.curso.dto.CursoResponse;
 import com.proyecto.inscripcionplatform.curso.dto.ProfesorResponse;
@@ -9,7 +10,7 @@ import com.proyecto.inscripcionplatform.usuario.model.UsuarioEntity;
 
 public class CursoMapper {
 
-    // Mapper para convertir un CursoRequest a CursoEntity, incluyendo la referencia al profesor por su ID
+    // Metodo para convertir un CursoRequest a CursoEntity, incluyendo la referencia al profesor por su ID
     public static CursoEntity toEntity(CursoRequest request) {
         if (request == null) return null;
 
@@ -60,4 +61,15 @@ public class CursoMapper {
                 )
                 .build();
     }
+
+    // Método para convertir una entidad a un response mini, con solo los campos esenciales
+    public static CursoMiniResponse toMiniResponse(CursoEntity curso) {
+    if (curso == null) return null;
+
+    return CursoMiniResponse.builder()
+            .id(curso.getId())
+            .nombre(curso.getNombre())
+            .valor(curso.getValor())
+            .build();
+}
 }
