@@ -23,8 +23,6 @@ jobs:
         with:
           context: .
           push: true
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/mi-app:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/mi-app:${{ github.sha }}

@@ -2,14 +2,9 @@ FROM eclipse-temurin:21-jdk-alpine AS builder
 WORKDIR /app
 COPY .mvn/ .mvn/
 COPY mvnw pom.xml ./
-RUN chmod +x mvnw
-
-# Descarga dependencias en una capa separada
-# Solo se vuelve a ejecutar si cambia el pom.xml
-RUN ./mvnw dependency:go-offline -B
-
+RUN ./mvnw dependency:go-offline
 COPY src ./src
-RUN ./mvnw package -DskipTests -B
+RUN ./mvnw package -DskipTests
 
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
