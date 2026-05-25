@@ -63,7 +63,7 @@ jobs:
 
             # Wallet
             mkdir -p wallet
-            echo "${{ secrets.OCI_WALLET_BASE64 }}" | base64 -d > wallet.zip
+            echo '${{ secrets.OCI_WALLET_BASE64 }}' | base64 -d > wallet.zip
             unzip -o wallet.zip -d wallet/
             rm wallet.zip
             sed -i 's|DIRECTORY=.*)|DIRECTORY=/app/wallet)|g' wallet/sqlnet.ora
