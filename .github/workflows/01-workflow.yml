@@ -58,6 +58,7 @@ jobs:
 
             cat > .env << 'EOF'
             DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}
+            DB_URL=${{ secrets.OCI_DB_URL }}
             DB_USER=${{ secrets.OCI_DB_USER }}
             DB_PASSWORD=${{ secrets.OCI_DB_PASSWORD }}
             TNS_ADMIN=/app/wallet
