@@ -56,16 +56,13 @@ jobs:
             mkdir -p /home/ubuntu/mi-app
             cd /home/ubuntu/mi-app
 
-            # Crear .env
             cat > .env << 'EOF'
             DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}
-            DB_DSN=${{ secrets.OCI_DB_DSN }}
             DB_USER=${{ secrets.OCI_DB_USER }}
             DB_PASSWORD=${{ secrets.OCI_DB_PASSWORD }}
             TNS_ADMIN=/app/wallet
             EOF
 
-            # Crear wallet
             mkdir -p wallet
 
             echo '${{ secrets.OCI_WALLET_BASE64 }}' | base64 -d > wallet.zip
@@ -74,7 +71,7 @@ jobs:
 
             rm wallet.zip
 
-            # Corregir sqlnet.ora
+
             cat > wallet/sqlnet.ora << 'EOF'
             WALLET_LOCATION =
               (SOURCE =
@@ -87,15 +84,15 @@ jobs:
             SSL_SERVER_DN_MATCH=yes
             EOF
 
-            # Pull nueva imagen
+
             docker compose pull
 
-            # Reiniciar app
+
             docker compose down
 
             docker compose up -d --remove-orphans
 
-            # Limpiar imágenes viejas
+
             docker image prune -f
 
             echo "Deploy completado: $(date)"
