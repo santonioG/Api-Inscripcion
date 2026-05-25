@@ -4,7 +4,7 @@ services:
     container_name: mi_app
     restart: always
     ports:
-      - "80:8080"
+      - "8080:8080"
     environment:
       TNS_ADMIN:   /app/wallet
       DB_DSN:      ${DB_DSN}

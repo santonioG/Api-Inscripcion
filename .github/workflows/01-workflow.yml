@@ -51,25 +51,51 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            set -e
+
+            mkdir -p /home/ubuntu/mi-app
             cd /home/ubuntu/mi-app
 
-            # .env corregido con DB_DSN para Oracle wallet
+            # Crear .env
             cat > .env << 'EOF'
             DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}
             DB_DSN=${{ secrets.OCI_DB_DSN }}
             DB_USER=${{ secrets.OCI_DB_USER }}
             DB_PASSWORD=${{ secrets.OCI_DB_PASSWORD }}
+            TNS_ADMIN=/app/wallet
             EOF
 
-            # Wallet
+            # Crear wallet
             mkdir -p wallet
-            echo '${{ secrets.OCI_WALLET_BASE64 }}' | base64 -d > wallet.zip
-            unzip -o wallet.zip -d wallet/
-            rm wallet.zip
-            sed -i 's|DIRECTORY=.*)|DIRECTORY=/app/wallet)|g' wallet/sqlnet.ora
 
-            # Deploy
+            echo '${{ secrets.OCI_WALLET_BASE64 }}' | base64 -d > wallet.zip
+
+            unzip -o wallet.zip -d wallet/
+
+            rm wallet.zip
+
+            # Corregir sqlnet.ora
+            cat > wallet/sqlnet.ora << 'EOF'
+            WALLET_LOCATION =
+              (SOURCE =
+                (METHOD = file)
+                (METHOD_DATA =
+                  (DIRECTORY = /app/wallet)
+                )
+              )
+
+            SSL_SERVER_DN_MATCH=yes
+            EOF
+
+            # Pull nueva imagen
             docker compose pull
+
+            # Reiniciar app
+            docker compose down
+
             docker compose up -d --remove-orphans
+
+            # Limpiar imágenes viejas
             docker image prune -f
-            echo " Deploy completado: $(date)"
+
+            echo "Deploy completado: $(date)"
