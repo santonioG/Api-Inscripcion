@@ -22,7 +22,7 @@ public class StorageConfig {
     @Value("${AWS_SESSION_TOKEN}")
     private String sessionToken;
 
-    @Value("${AWS_REGION}")
+    @Value("${aws.region}")
     private String region;
 
     @Bean
